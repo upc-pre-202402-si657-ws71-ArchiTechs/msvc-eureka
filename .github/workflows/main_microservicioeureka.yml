@@ -37,22 +37,13 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_51BC991997CD4DB8836511EDEF0C9A05 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_99D17004589D4DC1A572CD56B3700195 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0BF1FCEA42E44AABB4AB9E40B3EE9649 }}
-
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -60,4 +51,4 @@ jobs:
           app-name: 'microservicioeureka'
           slot-name: 'Production'
           package: '*.jar'
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1389FC6428054EE187AE7CABE32BD99B }}
