@@ -1,5 +1,18 @@
+server:
+  port: 8761
+
 spring:
   application:
     name: msvc-eureka
   config:
-    import: optional:configserver:https://microservicioconfig.azurewebsites.net
+    import: optional:configserver:https://configmsvc.azurewebsites.net/
+
+eureka:
+  instance:
+    hostname: eurekamsvc.azurewebsites.net  # Configura el dominio público
+    prefer-ip-address: false
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: https://eurekamsvc.azurewebsites.net/eureka/
